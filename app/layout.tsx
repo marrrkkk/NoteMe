@@ -4,6 +4,7 @@ import "./globals.css";
 import {
   ClerkProvider,
   SignInButton,
+  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
@@ -37,6 +38,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <SignedOut>
+            <SignUpButton />
             <SignInButton />
           </SignedOut>
           <SignedIn>

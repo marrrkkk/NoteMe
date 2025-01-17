@@ -1,52 +1,105 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import * as React from "react"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { createUser } from "@/actions/user"
-import { useRouter } from "next/navigation"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { createUser } from "@/actions/user";
+import { useRouter } from "next/navigation";
 
 const Setup = () => {
-
-  const [name, setName] = useState("")
+  const [username, setUsername] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [bio, setBio] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createUser(name);
-    router.push('/')
-    console.log(name)
-  }
+
+    if (!username) {
+      setError("Username is required.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null); // Clear previous errors
+
+    try {
+      await createUser(username, nickname, bio);
+      setLoading(false);
+      router.push("/"); // Redirect after successful creation
+    } catch (error) {
+      setLoading(false);
+      setError("Failed to create user. Please try again.");
+    }
+  };
+
   return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Create project</CardTitle>
-        <CardDescription>Deploy your new project in one-click.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit}>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Name of your project" onChange={(e) => setName(e.target.value)} value={name} />
+    <div className="flex justify-center items-center min-h-screen">
+      <Card className="w-[350px]">
+        <CardHeader>
+          <CardTitle>Setup Your Profile</CardTitle>
+          <CardDescription>
+            Complete your profile details below.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit}>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  placeholder="Your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="nickname">Nickname (Optional)</Label>
+                <Input
+                  id="nickname"
+                  placeholder="Your nickname"
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="bio">Bio (Optional)</Label>
+                <Input
+                  id="bio"
+                  placeholder="Tell us a bit about yourself"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                />
+              </div>
+
+              {/* Error message */}
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+
+              <Button type="submit" disabled={loading}>
+                {loading ? "Creating..." : "Complete Setup"}
+              </Button>
             </div>
-            <Button type="submit">Deploy</Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
-  )
-}
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
 export default Setup;

@@ -6,6 +6,7 @@ import UserProfile from "@/components/UserProfile";
 import Settings from "@/components/Settings";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import { currentUser } from "@clerk/nextjs/server";
 
 interface PageProps {
   params: Promise<{
@@ -16,6 +17,7 @@ interface PageProps {
 const UserPage = async ({ params }: PageProps) => {
   const { user } = await params;
   const userData = await getUserByName(user);
+  const currentUserData = await currentUser();
 
   if (!userData) {
     return <div>Error: No user data found</div>;
@@ -72,9 +74,11 @@ const UserPage = async ({ params }: PageProps) => {
               avatar_url={userData.avatarUrl || undefined}
               createdAt={joinedDate}
             />
-            <div className="mt-8">
-              <SendNote userId={userData.id} />
-            </div>
+            {currentUserData?.id !== userData.id && (
+              <div className="mt-8">
+                <SendNote userId={userData.id} />
+              </div>
+            )}
           </div>
           <div className="flex-1">
             <NotesList notes={noteData} />

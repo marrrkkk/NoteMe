@@ -1,3 +1,5 @@
+![alt text](image.png)
+
 # NoteMe
 
 NoteMe is a web application that allows users to send and receive anonymous notes. Users can create their profiles and share them with others. The platform is built using Next.js, Clerk for authentication, and Supabase for the database.

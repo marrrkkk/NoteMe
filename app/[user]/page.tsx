@@ -14,6 +14,15 @@ interface PageProps {
   }>;
 }
 
+export async function generateMetadata({ params }: PageProps) {
+  const { user } = await params;
+  const userData = await getUserByName(user);
+  if (!userData || "error" in userData) {
+    return { title: "User Not Found" };
+  }
+  return { title: userData.name };
+}
+
 const UserPage = async ({ params }: PageProps) => {
   const { user } = await params;
   const userData = await getUserByName(user);

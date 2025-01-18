@@ -1,4 +1,4 @@
-![alt text](image.png)
+![alt text](public/image.png)
 
 # NoteMe
 

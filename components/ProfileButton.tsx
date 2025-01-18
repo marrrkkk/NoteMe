@@ -9,9 +9,9 @@ import Link from "next/link";
 interface UserData {
   id: string;
   name: string;
-  avatarUrl: string | null; 
+  avatarUrl: string | null;
   nickname?: string;
-  bio: string | null; 
+  bio: string | null;
   email?: string;
 }
 
@@ -19,7 +19,6 @@ const ProfileButton = () => {
   const { user, isLoaded, isSignedIn } = useUser();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [buttonLoading, setButtonLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -43,14 +42,6 @@ const ProfileButton = () => {
     }
   }, [isLoaded, isSignedIn, user]);
 
-  const handleButtonClick = async () => {
-    setButtonLoading(true);
-
-    setTimeout(() => {
-      setButtonLoading(false);
-    }, 2000);
-  };
-
   if (loading || !isLoaded) {
     return <Button disabled>Loading...</Button>;
   }
@@ -60,12 +51,8 @@ const ProfileButton = () => {
   }
 
   return (
-    <Button onClick={handleButtonClick} disabled={buttonLoading}>
-      {buttonLoading ? (
-        "Loading..."
-      ) : (
-        <Link href={`/${userData.name}`}>My Profile</Link>
-      )}
+    <Button>
+      <Link href={`/${userData.name}`}>My Profile</Link>
     </Button>
   );
 };

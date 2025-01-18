@@ -1,7 +1,8 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { Link, Calendar } from "lucide-react";
-import Image from "next/image"; // Import next/image
+import Image from "next/image";
 
 interface UserProfileProps {
   name: string;
@@ -47,9 +48,9 @@ const UserProfile = ({
         <div className="w-24 h-24 rounded-full overflow-hidden">
           {avatar_url ? (
             <Image
-              src={avatar_url} // Use next/image instead of img
+              src={avatar_url}
               alt={`${name}'s avatar`}
-              width={96} // Set width and height
+              width={96}
               height={96}
               className="w-full h-full object-cover"
             />

@@ -34,12 +34,12 @@ const Setup = () => {
     }
 
     setLoading(true);
-    setError(null); // Clear previous errors
+    setError(null); 
 
     try {
       await createUser(username, nickname, bio);
       setLoading(false);
-      router.push("/"); // Redirect after successful creation
+      router.push("/"); 
     } catch (error) {
       setLoading(false);
       setError("Failed to create user. Please try again.");
@@ -88,7 +88,6 @@ const Setup = () => {
                 />
               </div>
 
-              {/* Error message */}
               {error && <p className="text-red-500 text-sm">{error}</p>}
 
               <Button type="submit" disabled={loading}>

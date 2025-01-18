@@ -64,7 +64,7 @@ const Note = ({
       setIsDeleteDrawerOpen(false);
       setOpen(false);
     } catch (error: any) {
-      console.error(error); // Log the error for debugging
+      console.error(error); 
       toast({
         variant: "destructive",
         title: "Error",
@@ -111,7 +111,7 @@ const Note = ({
       link.download = `note_${id}.png`;
       link.click();
     } catch (error: any) {
-      console.error(error); // Log the error for debugging
+      console.error(error); 
       toast({
         variant: "destructive",
         title: "Error",

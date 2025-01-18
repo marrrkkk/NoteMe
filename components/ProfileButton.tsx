@@ -9,9 +9,9 @@ import Link from "next/link";
 interface UserData {
   id: string;
   name: string;
-  avatarUrl: string | null; // Updated to allow null
+  avatarUrl: string | null; 
   nickname?: string;
-  bio: string | null; // Updated to allow null
+  bio: string | null; 
   email?: string;
 }
 
